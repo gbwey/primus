@@ -10,11 +10,11 @@ module TestZipNonEmpty where
 import Data.Foldable
 import qualified Data.List.NonEmpty as N
 import qualified Data.Monoid as MM
+import Primus.ZipNonEmpty
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import "checkers" Test.QuickCheck.Classes
 import Test.Tasty
-import Primus.ZipNonEmpty
 import qualified Test.Tasty.QuickCheck as TQ
 
 argsVerbose :: Args
@@ -36,6 +36,7 @@ testLawsZipNonEmpty =
 testLawsZipNonEmptyIO :: IO ()
 testLawsZipNonEmptyIO = do
   traverse_ verboseBatch testLawsZipNonEmpty
+
 {-
 doit :: IO ()
 doit = defaultMain suite

@@ -21,22 +21,15 @@ module Primus.TypeLevel (
   Snd,
   Fsts,
   Snds,
-  Length,
-  Len1T,
+  LengthT,
   NotEqTC,
   Cons1T,
-  Snoc1T,
-  Snoc1LT,
   SnocT,
   InitT,
-  Init1T,
-  Last1T,
-  Head1T,
-  App1T,
+  LastT,
   ApplyConstraints1,
   ApplyConstraint,
   ApplyConstraints,
-  UnconsT,
   UnsnocT,
   FirstConsT,
   ToITupleT,
@@ -96,19 +89,14 @@ type family Snds rs where
   Snds ('(_, b) ': rs) = b ': Snds rs
 
 -- | 'length' at the typelevel
-type Length :: forall k. [k] -> Nat
-type family Length rs where
-  Length '[] = 0
-  Length (_ ': '[]) = 1
-  Length (_ ': _ ': '[]) = 2
-  Length (_ ': _ ': _ ': '[]) = 3
-  Length (_ ': _ ': _ ': _ ': '[]) = 4
-  Length (_ ': _ ': _ ': _ ': _ ': rs) = 5 + Length rs
-
--- | get the length of a type level nonempty list
-type Len1T :: forall k. NonEmpty k -> k
-type family Len1T ns where
-  Len1T (_ ':| ns) = 1 GN.+ Length ns
+type LengthT :: forall k. [k] -> Nat
+type family LengthT rs where
+  LengthT '[] = 0
+  LengthT '[_] = 1
+  LengthT '[_, _] = 2
+  LengthT '[_, _, _] = 3
+  LengthT '[_, _, _, _] = 4
+  LengthT (_ ': _ ': _ ': _ ': _ ': rs) = 5 + LengthT rs
 
 -- | ensure that two types are not equal
 type NotEqTC :: forall k k1. k -> k1 -> Constraint
@@ -123,28 +111,11 @@ type Cons1T :: forall k. k -> NonEmpty k -> NonEmpty k
 type family Cons1T a ys = result | result -> a ys where
   Cons1T a (b ':| bs) = a ':| b ': bs
 
--- | snoc a nonempty list type to a type
-type Snoc1T :: forall k. NonEmpty k -> k -> NonEmpty k
-type family Snoc1T as b where
-  Snoc1T (a ':| as) b = a ':| SnocT as b
-
 -- | snoc a type list to a type
 type SnocT :: forall k. [k] -> k -> [k]
 type family SnocT as b where
   SnocT '[] b = '[b]
   SnocT (a ': as) b = a ': SnocT as b
-
--- | snoc a type list to a type
-type Snoc1LT :: forall k. [k] -> k -> NonEmpty k
-type family Snoc1LT as b where
-  Snoc1LT '[] b = b ':| '[]
-  Snoc1LT (a ': as) b = Cons1T a (Snoc1LT as b)
-
--- | append two nonempty lists at the type level
-type App1T :: forall k. NonEmpty k -> NonEmpty k -> NonEmpty k
-type family App1T x y where
-  App1T (a ':| '[]) y = Cons1T a y
-  App1T (a ':| a1 ': as) y = Cons1T a (App1T (a1 ':| as) y)
 
 -- | create a constraint from a type and list of constraints taking a type
 type ApplyConstraints1 :: forall k. [k -> Constraint] -> k -> Constraint
@@ -164,16 +135,12 @@ type family ApplyConstraints cs xs where
   ApplyConstraints '[] _ = ()
   ApplyConstraints (c ': cs) xs = (ApplyConstraint c xs, ApplyConstraints cs xs)
 
--- | uncons a type level nonempty list
-type UnconsT :: forall k. NonEmpty k -> (k, [k])
-type family UnconsT ns = result | result -> ns where
-  UnconsT (a ':| as) = '(a, as)
-
 -- | unsnoc a type level nonempty list
-type UnsnocT :: forall k. NonEmpty k -> ([k], k)
+type UnsnocT :: forall k. [k] -> ([k], k)
 type family UnsnocT ns where
-  UnsnocT (a ':| '[]) = '( '[], a)
-  UnsnocT (a ':| a1 ': as) = FirstConsT a (UnsnocT (a1 ':| as))
+  UnsnocT '[] = GL.TypeError ('GL.Text "UnsnocT: undefined for empty indices")
+  UnsnocT '[a] = '( '[], a)
+  UnsnocT (a ': a1 ': as) = FirstConsT a (UnsnocT (a1 ': as))
 
 -- | cons a type to the first element in a tuple
 type FirstConsT :: forall k k1. k -> ([k], k1) -> ([k], k1)
@@ -258,22 +225,12 @@ infixr 5 ++
 -- | get the init of a list
 type InitT :: forall a. [a] -> [a]
 type family InitT xs where
-  InitT '[] = GL.TypeError ( 'GL.Text "InitT: undefined for 1d")
-  InitT (_ ': '[]) = '[]
+  InitT '[] = GL.TypeError ( 'GL.Text "InitT: undefined for empty indices")
+  InitT '[_] = '[]
   InitT (n ': m ': ns) = n ': InitT (m ': ns)
 
--- | get the init of a nonempty list
-type Init1T :: forall a. NonEmpty a -> NonEmpty a
-type family Init1T ns where
-  Init1T (n ':| ns) = n ':| InitT ns
-
 -- | peel off the bottom-most index in the matrix
-type Last1T :: forall k. NonEmpty k -> k
-type family Last1T ns where
-  Last1T (a ':| '[]) = a
-  Last1T (_ ':| (a1 : as)) = Last1T (a1 ':| as)
-
--- | get the head of a nonempty list
-type Head1T :: forall k. NonEmpty k -> k
-type family Head1T ns where
-  Head1T (a ':| _) = a
+type LastT :: forall k. [k] -> k
+type family LastT ns where
+  LastT '[a] = a
+  LastT (_ ': a1 : as) = LastT (a1 ': as)

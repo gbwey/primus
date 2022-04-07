@@ -15,7 +15,6 @@ module Primus.Extra (
   comparing1,
   (.@),
 ) where
-
 -- | more flexible version of 'Data.Function.on' that allows differing types for the same container
 on1 ::
   forall f a a' b c.

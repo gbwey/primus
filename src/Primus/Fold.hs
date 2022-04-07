@@ -449,7 +449,7 @@ tailsT ta = forceRight "tailsT" $ do
 
 -- | 'Data.List.reverse' for a traversable container
 reverseT :: forall a t. Traversable t => t a -> t a
-reverseT = frp . wrapL reverse
+reverseT = frp . wrapL reverseF
 
 -- | 'Data.List.sortBy' for a traversable container
 sortByT :: forall a t. Traversable t => (a -> a -> Ordering) -> t a -> t a

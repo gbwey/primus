@@ -4,5 +4,5 @@ packages:
 - .
 
 extra-deps:
-# - ../pos
-- pos-0.1.0.0@sha256:3bddb0d75bd93137b0507f11cbb731c9695227dbb641d108e15cc41f71aa7a0e,1712
+- ../pos
+# - pos-0.2.0.0

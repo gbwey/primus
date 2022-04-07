@@ -529,4 +529,3 @@ unitsF = GE.fromList . flip replicate () . unP
 sumP :: Foldable1 t => t Pos -> Pos
 sumP = L.foldr1 (+!)
 {-# INLINE sumP #-}
-

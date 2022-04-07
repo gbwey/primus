@@ -4,6 +4,7 @@
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
+
 {- |
 Module      : Primus.Enum
 Description : methods for safe enumeration and enumeration on containers
@@ -136,16 +137,16 @@ zerolr = left (const "zerolr: not defined at zero") $ integerToEnumSafe @a 0
 -- | calculates the minimum and maximum range of enumerations that can be stored in a container of the given size
 capacity :: forall a t z. (Bounded a, Enum a, Foldable t) => t z -> Either String (Integer, Integer)
 capacity (length -> len) = do
-      let z@(mn, mx) = minMax @a
-      lhs <- case compare mn 0 of
-            LT -> Right (-(-mn + 1) ^ len + 1)
-            EQ -> Right 0
-            GT -> Left $ "capacity: unsupported mn > 0: " ++ show z
-      rhs <- case compare 0 mx of
-            LT -> Right ((mx + 1) ^ len - 1)
-            EQ -> Right 0
-            GT -> Left $ "capacity: unsupported mx < 0: " ++ show z
-      pure (lhs,rhs)
+  let z@(mn, mx) = minMax @a
+  lhs <- case compare mn 0 of
+    LT -> Right (-(-mn + 1) ^ len + 1)
+    EQ -> Right 0
+    GT -> Left $ "capacity: unsupported mn > 0: " ++ show z
+  rhs <- case compare 0 mx of
+    LT -> Right ((mx + 1) ^ len - 1)
+    EQ -> Right 0
+    GT -> Left $ "capacity: unsupported mx < 0: " ++ show z
+  pure (lhs, rhs)
 
 {- | convert toEnum of "a" into a list containing "a"s
    zero is the empty list: see 'toEnumList'

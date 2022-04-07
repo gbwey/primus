@@ -10,8 +10,8 @@ import Control.Lens
 import Data.Char
 import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.List.NonEmpty as N
-import Data.These
 import Data.Pos
+import Data.These
 import Primus.Bool
 import Primus.Enum
 import Primus.NonEmpty

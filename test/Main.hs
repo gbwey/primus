@@ -12,6 +12,7 @@ import qualified TestList
 import qualified TestNonEmpty
 import qualified TestNum1
 import qualified TestZipNonEmpty
+import qualified TestTypeLevel
 
 main :: IO ()
 main = do
@@ -35,7 +36,8 @@ main = do
           , TestLRHist.suite
           , TestNonEmpty.suite
           , TestNum1.suite
---          , TestZipNonEmpty.suite
+          , TestTypeLevel.suite
+          --          , TestZipNonEmpty.suite
           ]
             ++ zs
         )

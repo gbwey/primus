@@ -124,21 +124,21 @@ suite =
         map lhToEither zz2
           @?= [ Left "ab"
               , Right (This 'H')
-              , Left "dude"
+              , Left "oops"
               , Right (That 50)
               ]
     , testCase "lhToEitherI" $
         map lhToEitherI zz2
           @?= [ Left "ab"
               , Right (This 'H', (72, (2, ('y', (True, ())))))
-              , Left "dude"
+              , Left "oops"
               , Right (That 50, (50, (299, ('a', (False, ())))))
               ]
     , testCase "lhToEitherTuples" $
         map lhToEitherTuples zz2
           @?= [ Left "ab"
               , Right (This 'H', 72, 2, 'y', True)
-              , Left "dude"
+              , Left "oops"
               , Right (That 50, 50, 299, 'a', False)
               ]
     , testCase "lhToEitherTuples appLR" $
@@ -347,7 +347,7 @@ zz2 =
               if a > 50
                 then Right (This (chr a))
                 else Right (That a)
-            else Left "dude"
+            else Left "oops"
       )
 
 suiteCheckers :: TestTree
@@ -367,5 +367,3 @@ adj' v sz n ratio =
     . adjustOption (max $ TQ.QuickCheckTests n)
     . adjustOption (max $ TQ.QuickCheckMaxRatio ratio)
     . adjustOption (const (TQ.QuickCheckVerbose v))
-
-

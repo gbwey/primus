@@ -143,7 +143,6 @@ iterateT1 f a0 = a0 :| go a0
     Nothing -> []
     Just x -> x : go x
 
-
 {- | like 'Data.List.unfoldr' but terminate using 'AsMaybe'
 
 @

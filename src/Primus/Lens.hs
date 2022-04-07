@@ -4,7 +4,6 @@
 {- |
 Module      : Primus.Lens
 Description : minimal lens interfaces
-
 -}
 module Primus.Lens (
   Lens,

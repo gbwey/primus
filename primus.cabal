@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           primus
-version:        0.1.0.0
+version:        0.2.0.0
 synopsis:       NonEmpty and positive functions
 description:    A library containing positive-valued and nonempty functions . Please see the README on GitHub at <https://github.com/gbwey/primus#readme>
 category:       Data, General
@@ -69,6 +69,7 @@ test-suite primus-test
       TestLRHist
       TestNonEmpty
       TestNum1
+      TestTypeLevel
       TestZipNonEmpty
       Paths_primus
   hs-source-dirs:

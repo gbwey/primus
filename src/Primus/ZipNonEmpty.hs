@@ -72,4 +72,3 @@ instance GE.IsList (ZipNonEmpty a) where
 -- | iso for the zipnonempty constructor
 _Zip1 :: Iso (ZipNonEmpty a) (ZipNonEmpty b) (NonEmpty a) (NonEmpty b)
 _Zip1 = iso coerce coerce
-

@@ -93,6 +93,10 @@ module Primus.NonEmpty (
   findDupsBy,
   replicate1,
   replicate1M,
+
+  nonemptySnoc,
+  nonempty,
+  nonempty',
 ) where
 
 import Control.Arrow
@@ -111,7 +115,6 @@ import Data.Tuple
 import qualified GHC.Exts as GE (IsList (..))
 import Primus.Bool
 import Primus.Error
-import Primus.Extra
 import Primus.Fold
 import Primus.Lens
 
@@ -162,7 +165,7 @@ chunksOf1 = join chunksRange1
 chunksRange1 :: Pos -> Pos -> NonEmpty a -> NonEmpty (NonEmpty a)
 chunksRange1 n (Pos skip) = unfoldr1NE (take1 n &&& N.drop skip)
 
-{- | creates a nonempty container of length "sz" with chunks of a given size: @see 'chunkNLen'
+{- | creates a nonempty container of length "sz" with chunks of a given size: see 'chunkNLen'
  must fill the container exactly
 -}
 chunkNLen1 ::
@@ -313,6 +316,15 @@ unsnoc1 = uncurry go . uncons1
   go :: a -> [a] -> ([a], a)
   go n [] = ([], n)
   go n (x : xs) = first (n :) (go x xs)
+
+nonempty :: (a -> [a] -> b) -> NonEmpty a -> b
+nonempty f (a:|as) = f a as
+
+nonempty' :: NonEmpty a -> (a -> [a] -> b) -> b
+nonempty' = flip nonempty
+
+nonemptySnoc :: ([a] -> a -> b) -> NonEmpty a -> b
+nonemptySnoc f = uncurry f . unsnoc1
 
 -- | uncons for a nonempty list
 uncons1 :: forall a. NonEmpty a -> (a, [a])

@@ -30,7 +30,6 @@ import qualified Data.List as L
 import qualified Data.List.NonEmpty as N
 import Primus.Enum
 import Primus.Error
-import Primus.Extra
 import Primus.Fold
 
 -- | builds a representable from the left using past and future inputs

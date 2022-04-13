@@ -9,7 +9,6 @@ module Primus (
   module Primus.AsMaybe,
   module Primus.Bool,
   module Primus.Enum,
-  module Primus.Extra,
   module Primus.Error,
   module Primus.Fold,
   module Primus.List,
@@ -24,7 +23,6 @@ import Primus.AsMaybe
 import Primus.Bool
 import Primus.Enum
 import Primus.Error
-import Primus.Extra
 import Primus.Fold
 import Primus.List
 import Primus.NonEmpty

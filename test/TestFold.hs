@@ -95,7 +95,7 @@ suite =
         compareLength ('a' :| ['b' .. 'g']) [100 :: Int .. 106]
           @?= CEQ
     , testCase "compareLengths" $
-        compareLengths ([1 :: Int .. 5] :| [[101 .. 110], [201 .. 205], [301 .. 302], [], [1001 .. 1020]])
+        compareLengths @Int @Int [1 .. 5] [[101 .. 110], [201 .. 205], [301 .. 302], [], [1001 .. 1020]]
           @?= [ CLT (106 :| [107, 108, 109, 110])
               , CEQ
               , CGT
@@ -103,10 +103,32 @@ suite =
               , CLT (1006 :| [1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020])
               ]
     , testCase "compareLengths" $
-        compareLengths ([1 :: Int .. 5] :| [[101 .. 110]])
+        compareLengths @Char @Int ['a' .. 'z'] [[101 .. 110], [201 .. 205], [301 .. 302], [], [1001 .. 1020]]
+          @?= [CGT,CGT,CGT,CGT,CGT]
+    , testCase "compareLengths" $
+        compareLengths @Char @Int ['a' .. 'd'] [[101 .. 104], [201 .. 204], [301 .. 302], [], [1001 .. 1010]]
+          @?= [ CEQ
+              , CEQ
+              , CGT
+              , CGT
+              , CLT (1005 :| [1006,1007,1008,1009,1010])
+              ]
+
+    , testCase "compareLengths" $
+        compareLengths @Char @Int ['a' .. 'd'] [[101 .. 110], [201 .. 205], [301 .. 302], [], [1001 .. 1010]]
+          @?=
+             [ CLT (105 :| [106,107,108,109,110])
+             , CLT (205 :| [])
+             , CGT
+             , CGT
+             , CLT (1005 :| [1006,1007,1008,1009,1010])
+             ]
+
+    , testCase "compareLengths" $
+        compareLengths @Int @Int [1 .. 5] [[101 .. 110]]
           @?= [CLT (106 :| [107 .. 110])]
     , testCase "compareLengths" $
-        compareLengths ([1 :: Int .. 5] :| [])
+        compareLengths @Int @Int @_ @[] [1 .. 5] []
           @?= []
     , testCase "compareLength infinite lhs" $
         compareLength [1 :: Int ..] ['a' .. 'f']

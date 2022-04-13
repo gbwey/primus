@@ -46,7 +46,7 @@ import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.Semigroup as SG
 import Data.These
 import Data.These.Combinators
-import Primus.Extra
+import Primus.Error ((.@))
 
 -- | converts to a 'Maybe' for failure types
 class AsMaybe x b | x -> b where

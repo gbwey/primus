@@ -29,6 +29,9 @@ module Primus.Error (
 
   -- * decorate an error
   lmsg,
+
+  -- * miscellaneous
+  (.@),
 ) where
 
 import Control.Arrow
@@ -103,3 +106,9 @@ fromList1P msg =
   \case
     [] -> programmError $ "fromList1P:" ++ msg
     x : xs -> x :| xs
+
+-- | compose a two arg function followed by a one arg function
+(.@) :: (c -> d) -> (a -> b -> c) -> a -> b -> d
+(.@) = (.) . (.)
+
+infixr 8 .@

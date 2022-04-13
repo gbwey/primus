@@ -5,12 +5,12 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           primus
-version:        0.2.0.0
-synopsis:       NonEmpty and positive functions
+version:        0.3.0.0
+synopsis:       nonempty and positive functions
 description:    A library containing positive-valued and nonempty functions . Please see the README on GitHub at <https://github.com/gbwey/primus#readme>
 category:       Data, General
 homepage:       https://github.com/gbwey/primus#readme
-bug-reports:    https://github.com/gbwey/primus.git/issues
+bug-reports:    https://github.com/gbwey/primus/issues
 author:         Grant Weyburne <gbwey9@gmail.com>
 maintainer:     Grant Weyburne <gbwey9@gmail.com>
 copyright:      2022 Grant Weyburne
@@ -20,7 +20,7 @@ build-type:     Simple
 
 source-repository head
   type: git
-  location: https://github.com/gbwey/primus.git
+  location: https://github.com/gbwey/primus
 
 library
   exposed-modules:
@@ -29,7 +29,6 @@ library
       Primus.Bool
       Primus.Enum
       Primus.Error
-      Primus.Extra
       Primus.Fold
       Primus.Lens
       Primus.List
@@ -63,7 +62,6 @@ test-suite primus-test
       TestAsMaybe
       TestBool
       TestEnum
-      TestExtra
       TestFold
       TestList
       TestLRHist

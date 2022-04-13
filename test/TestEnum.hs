@@ -206,10 +206,10 @@ suite =
           @?= Right (-35723051648, 34359738367)
     , testCase "capacity" $
         capacity @NegOnly []
-          @?= Left "capacity: unsupported mx < 0: (-3,-1)"
+          @?= Left "capacity:unsupported mx < 0: (-3,-1)"
     , testCase "capacity" $
         capacity @PosOnly ['x']
-          @?= Left "capacity: unsupported mn > 0: (1,3)"
+          @?= Left "capacity:unsupported mn > 0: (1,3)"
     , testCase "universeTraversable" $
         universeTraversable [EQ]
           @?= Right ([LT] :| [[EQ], [GT]])

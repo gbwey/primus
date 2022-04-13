@@ -5,14 +5,13 @@ import Test.Tasty
 import qualified TestAsMaybe
 import qualified TestBool
 import qualified TestEnum
-import qualified TestExtra
 import qualified TestFold
 import qualified TestLRHist
 import qualified TestList
 import qualified TestNonEmpty
 import qualified TestNum1
-import qualified TestZipNonEmpty
 import qualified TestTypeLevel
+import qualified TestZipNonEmpty
 
 main :: IO ()
 main = do
@@ -30,7 +29,6 @@ main = do
         ( [ TestAsMaybe.suite
           , TestBool.suite
           , TestEnum.suite
-          , TestExtra.suite
           , TestFold.suite
           , TestList.suite
           , TestLRHist.suite

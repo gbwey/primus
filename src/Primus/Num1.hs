@@ -26,7 +26,6 @@ import Data.Word
 import GHC.Natural
 import Primus.Enum
 import Primus.Error
-import Primus.Extra
 
 -- | run a function of one integer against the underlying 'Num1' type
 withOp :: Num1 a => (Integer -> Integer) -> a -> Either String a
@@ -93,14 +92,12 @@ instance Num1 Natural where
     | otherwise = Right $ naturalFromInteger i
 
 instance Num1 Pos
-
+instance Num1 Word
 instance Num1 Word8
 instance Num1 Word16
 instance Num1 Word32
 instance Num1 Word64
-
 instance Num1 Int
-
 instance Num1 Int8
 instance Num1 Int16
 instance Num1 Int32

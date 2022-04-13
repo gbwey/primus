@@ -1,6 +1,6 @@
 name:                primus
-version:             0.2.0.0
-synopsis:            NonEmpty and positive functions
+version:             0.3.0.0
+synopsis:            nonempty and positive functions
 description:
   A library containing positive-valued and nonempty functions
   .
@@ -13,7 +13,7 @@ maintainer:          Grant Weyburne <gbwey9@gmail.com>
 copyright:           2022 Grant Weyburne
 category:            Data, General
 
-github: gbwey/primus.git
+github: gbwey/primus
 
 dependencies:
 - base >= 4.7 && < 5

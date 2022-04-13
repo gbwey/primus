@@ -138,7 +138,7 @@ type family ApplyConstraints cs xs where
 -- | unsnoc a type level nonempty list
 type UnsnocT :: forall k. [k] -> ([k], k)
 type family UnsnocT ns where
-  UnsnocT '[] = GL.TypeError ('GL.Text "UnsnocT: undefined for empty indices")
+  UnsnocT '[] = GL.TypeError ( 'GL.Text "UnsnocT: undefined for empty indices")
   UnsnocT '[a] = '( '[], a)
   UnsnocT (a ': a1 ': as) = FirstConsT a (UnsnocT (a1 ': as))
 

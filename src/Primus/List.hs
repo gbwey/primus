@@ -47,6 +47,10 @@ module Primus.List (
   allEqualBy,
   snocL,
   unsnocL,
+  unsnocL',
+    list,
+    list',
+  listSnoc,
 ) where
 
 import Control.Arrow
@@ -60,7 +64,6 @@ import Data.These
 import GHC.Stack
 import Primus.Bool
 import Primus.Error
-import Primus.Extra
 
 -- | split a list into overlapping pairs plus overflow
 pairsOf1 :: [a] -> ([(a, a)], Maybe a)
@@ -118,7 +121,7 @@ data SplitL a
 -- | split a list preserving information about the split
 splitAtL :: forall a. Int -> [a] -> ([a], SplitL a)
 splitAtL n xs
-  | n < 0 = (xs, SplitLNeg (unsafePos "x" (-n)))
+  | n < 0 = (xs, SplitLNeg (unsafePos "splitAtL" (-n)))
   | otherwise = go 0 xs
  where
   go :: Int -> [a] -> ([a], SplitL a)
@@ -242,13 +245,31 @@ partitionM f = go
     [] -> pure mempty
     a : as -> (\b -> bool first second b (a :)) <$> f a <*> go as
 
+-- | break up a list into cases using cons
+list :: b -> (a -> [a] -> b) -> [a] -> b
+list z s = \case
+  [] -> z
+  a:as -> s a as
+
+-- | break up a list into cases using cons
+list' :: [a] -> b -> (a -> [a] -> b) -> b
+list' as z s = list z s as
+
+-- | break up a list into cases using snoc
+listSnoc :: b -> ([a] -> a -> b) -> [a] -> b
+listSnoc z s = maybe z (uncurry s) . unsnocL
+
 -- | snoc for a list
 snocL :: [a] -> a -> [a]
 snocL as a = as ++ [a]
 
+-- | unsnoc for a list
+unsnocL :: [a] -> Maybe ([a], a)
+unsnocL = list Nothing (Just .@ unsnocL')
+
 -- | unsnoc for a value and a list
-unsnocL :: a -> [a] -> ([a], a)
-unsnocL a =
+unsnocL' :: a -> [a] -> ([a], a)
+unsnocL' a =
   \case
     [] -> ([], a)
-    x : xs -> first (a :) (unsnocL x xs)
+    x : xs -> first (a :) (unsnocL' x xs)

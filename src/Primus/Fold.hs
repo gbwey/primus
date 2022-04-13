@@ -82,7 +82,6 @@ import Data.Semigroup.Foldable
 import Data.These
 import Data.These.Combinators
 import Primus.Error
-import Primus.Extra
 
 data Hist a b = Hist ![a] ![a] !b
 
@@ -149,7 +148,7 @@ histMapImpl' ::
   ([a] -> [a] -> a -> b) ->
   t a ->
   t b
-histMapImpl' isright f = snd . bool histMapL histMapR isright g ()
+histMapImpl' isright f = snd . histMapImpl isright g ()
  where
   g :: [a] -> [a] -> () -> a -> ((), b)
   g ps ft () a = ((), f ps ft a)
@@ -315,8 +314,12 @@ data CLCount b
   deriving stock (Ord, Show, Eq, Functor, Traversable, Foldable)
 
 -- | compare lengths of foldables
-compareLengths :: Foldable t => NonEmpty (t a) -> [CLCount a]
-compareLengths (xs :| xss) = map (compareLengthBy mempty xs) xss
+compareLengths :: forall a b t u
+  . (Foldable t,Foldable u)
+  => t a
+  -> [u b]
+  -> [CLCount b]
+compareLengths xs = map (compareLengthBy mempty xs)
 
 -- | compare length where lhs or rhs can be infinite but not both
 compareLength ::

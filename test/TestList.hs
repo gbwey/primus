@@ -94,4 +94,12 @@ suite =
               , 13
               ]
               )
+    , testCase "list" $
+       list 'x' undefined ([] :: [()]) @?= 'x'
+    , testCase "listSnoc" $
+       listSnoc 'x' undefined ([] :: [()]) @?= 'x'
+    , testCase "list" $
+       list undefined (,) [1::Int ..5] @?= (1,[2..5])
+    , testCase "listSnoc" $
+       listSnoc undefined (,) [1::Int ..5] @?= ([1,2,3,4],5)
     ]

@@ -317,12 +317,15 @@ unsnoc1 = uncurry go . uncons1
   go n [] = ([], n)
   go n (x : xs) = first (n :) (go x xs)
 
+-- | break up a nonempty into cases using cons
 nonempty :: (a -> [a] -> b) -> NonEmpty a -> b
 nonempty f (a:|as) = f a as
 
+-- | break up a nonempty into cases using cons (argument order is flipped from 'nonempty')
 nonempty' :: NonEmpty a -> (a -> [a] -> b) -> b
 nonempty' = flip nonempty
 
+-- | break up a nonempty into cases using snoc
 nonemptySnoc :: ([a] -> a -> b) -> NonEmpty a -> b
 nonemptySnoc f = uncurry f . unsnoc1
 

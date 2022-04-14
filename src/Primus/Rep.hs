@@ -73,7 +73,7 @@ izipWithR ::
   f a ->
   f b ->
   f c
-izipWithR f as bs = tabulate $ \k -> f k (index as k) (index bs k)
+izipWithR f as bs = tabulate (\k -> f k (index as k) (index bs k))
 
 -- | 'Control.Monad.zipWithM' with rep index
 izipWithRF ::

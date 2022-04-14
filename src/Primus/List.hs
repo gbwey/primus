@@ -251,7 +251,7 @@ list z s = \case
   [] -> z
   a:as -> s a as
 
--- | break up a list into cases using cons
+-- | break up a list into cases using cons (argument order is flipped from 'list')
 list' :: [a] -> b -> (a -> [a] -> b) -> b
 list' as z s = list z s as
 

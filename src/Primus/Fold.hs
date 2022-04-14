@@ -202,7 +202,7 @@ traverseLR ::
   Either String (c, t b)
 traverseLR f c0 ta =
   let g :: a -> StateLR String c b
-      g a = StateLR $ \c -> f c a
+      g a = StateLR (\c -> f c a)
    in unStateLR (traverse g ta) c0
 
 -- | fill a traversable with a list and fail if not enough data
@@ -421,7 +421,7 @@ newtype StateLR e s a = StateLR {unStateLR :: s -> Either e (s, a)}
   deriving stock (Functor)
 
 instance Applicative (StateLR e s) where
-  pure a = StateLR $ \s -> Right (s, a)
+  pure a = StateLR (\s -> Right (s, a))
   (<*>) = ap
 
 instance Monad (StateLR e s) where

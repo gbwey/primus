@@ -151,10 +151,10 @@ suite =
     , testCase "spanT" $
         spanT (\x -> SG.Arg (if x > 3 then "" else "xx" :: String) (x, x * 1000)) [1 .. 5 :: Int]
           @?= (
-              [ SG.Arg "xx" (1, 1000)
-              , SG.Arg "xx" (2, 2000)
-              , SG.Arg "xx" (3, 3000)
-              ]
+                [ SG.Arg "xx" (1, 1000)
+                , SG.Arg "xx" (2, 2000)
+                , SG.Arg "xx" (3, 3000)
+                ]
               , [4, 5]
               )
     , testCase "takeWhileT" $
@@ -175,63 +175,63 @@ suite =
     , testCase "partitionEithersT" $
         partitionEithersT (\a -> if even a then Left @String "1" else Right (a, True)) [1 :: Int .. 4]
           @?= (
-              [ "1"
-              , "1"
-              ]
+                [ "1"
+                , "1"
+                ]
               ,
-              [
-                ( 1
-                , True
-                )
-              ,
-                ( 3
-                , True
-                )
-              ]
+                [
+                  ( 1
+                  , True
+                  )
+                ,
+                  ( 3
+                  , True
+                  )
+                ]
               )
     , testCase "partitionEithersT" $
         partitionEithersT even [1 :: Int .. 5]
           @?= (
-              [ 1
-              , 3
-              , 5
-              ]
+                [ 1
+                , 3
+                , 5
+                ]
               ,
-              [ 2
-              , 4
-              ]
+                [ 2
+                , 4
+                ]
               )
     , testCase "L.span" $
         L.span even [2 :: Int, 4, 6, 8, 9, 11, 13]
           @?= (
-              [ 2
-              , 4
-              , 6
-              , 8
-              ]
+                [ 2
+                , 4
+                , 6
+                , 8
+                ]
               ,
-              [ 9
-              , 11
-              , 13
-              ]
+                [ 9
+                , 11
+                , 13
+                ]
               )
     , testCase "spanT" $
         spanT (\a -> if even a then Just (chr (a + 50)) else Nothing) [2 :: Int, 4, 6, 8, 9, 11, 13]
           @?= ( "468:"
               ,
-              [ 9
-              , 11
-              , 13
-              ]
+                [ 9
+                , 11
+                , 13
+                ]
               )
     , testCase "spanT simpler" $
         spanT (boolMaybe even (chr . (+ 50))) [2 :: Int, 4, 6, 8, 9, 11, 13]
           @?= ( "468:"
               ,
-              [ 9
-              , 11
-              , 13
-              ]
+                [ 9
+                , 11
+                , 13
+                ]
               )
     , testCase "apThese" $ apThese 'x' (Just @Int 1) @?= That 1
     , testCase "apThese" $ apThese 'x' True @?= That 'x'
@@ -244,72 +244,72 @@ suite =
         toTheseTS (\z a -> (z + 1, if even a then Right (z, a) else Left (a, z, "oops" :: String))) (100 :: Integer) [2, 4, 6, 7, 8, 9 :: Int]
           @?= ( 106
               ,
-              [ That
-                  ( 100
-                  , 2
-                  )
-              , That
-                  ( 101
-                  , 4
-                  )
-              , That
-                  ( 102
-                  , 6
-                  )
-              , This
-                  ( 7
-                  , 103
-                  , "oops"
-                  )
-              , That
-                  ( 104
-                  , 8
-                  )
-              , This
-                  ( 9
-                  , 105
-                  , "oops"
-                  )
-              ]
+                [ That
+                    ( 100
+                    , 2
+                    )
+                , That
+                    ( 101
+                    , 4
+                    )
+                , That
+                    ( 102
+                    , 6
+                    )
+                , This
+                    ( 7
+                    , 103
+                    , "oops"
+                    )
+                , That
+                    ( 104
+                    , 8
+                    )
+                , This
+                    ( 9
+                    , 105
+                    , "oops"
+                    )
+                ]
               )
     , testCase "partitionEithersT" $
         partitionEithersT (\a -> if even a then Right (chr (50 + a)) else Left (a, "oops" :: String)) [2, 4, 6, 7, 8, 9 :: Int]
           @?= (
-              [
-                ( 7
-                , "oops"
-                )
-              ,
-                ( 9
-                , "oops"
-                )
-              ]
+                [
+                  ( 7
+                  , "oops"
+                  )
+                ,
+                  ( 9
+                  , "oops"
+                  )
+                ]
               , "468:"
               )
     , testCase "spanTS" $
         spanTS (\z a -> (z + 1, if even a then Right (z, chr (50 + a)) else Left (z, a, "oops" :: String))) (100 :: Int) [2, 4, 6, 7, 8, 9 :: Int]
           @?= ( 104
               ,
-              (
-              [
-                ( 100
-                , '4'
+                (
+                  [
+                    ( 100
+                    , '4'
+                    )
+                  ,
+                    ( 101
+                    , '6'
+                    )
+                  ,
+                    ( 102
+                    , '8'
+                    )
+                  ]
+                ,
+                  [ 7
+                  , 8
+                  , 9
+                  ]
                 )
-              ,
-                ( 101
-                , '6'
-                )
-              ,
-                ( 102
-                , '8'
-                )
-              ]
-              ,
-              [ 7
-              , 8
-              , 9
-              ]
-              )
               )
     , testCase "L.span" $ L.span even [2, 4, 6, 5, 3, 1, 2, 3 :: Int] @?= ([2, 4, 6], [5, 3, 1, 2, 3])
     , testCase "toMaybe" $ toMaybe (Left @String @Int "asdf", Nothing @()) @?= Nothing
@@ -325,27 +325,27 @@ suite =
     , testCase "partitionTheseT" $
         partitionTheseT (boolThese even (>= 5) show (chr . (65 +))) [1 :: Int .. 10]
           @?= (
-              [ "1"
-              , "3"
-              , "5"
-              , "7"
-              , "9"
-              ]
+                [ "1"
+                , "3"
+                , "5"
+                , "7"
+                , "9"
+                ]
               , "CE"
               ,
-              [
-                ( "6"
-                , 'G'
-                )
-              ,
-                ( "8"
-                , 'I'
-                )
-              ,
-                ( "10"
-                , 'K'
-                )
-              ]
+                [
+                  ( "6"
+                  , 'G'
+                  )
+                ,
+                  ( "8"
+                  , 'I'
+                  )
+                ,
+                  ( "10"
+                  , 'K'
+                  )
+                ]
               )
     , testCase "toTheseT" $
         toTheseT even [1 :: Int .. 10]
@@ -358,23 +358,23 @@ suite =
           @?= [
                 ( "a"
                 ,
-                [ 1
-                , 2
-                ]
+                  [ 1
+                  , 2
+                  ]
                 )
               ,
                 ( "b"
                 ,
-                [ 3
-                , 4
-                ]
+                  [ 3
+                  , 4
+                  ]
                 )
               ,
                 ( "c"
                 ,
-                [ 5
-                , 6
-                ]
+                  [ 5
+                  , 6
+                  ]
                 )
               ]
     , testCase "unfoldrT" $

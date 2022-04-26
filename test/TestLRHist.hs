@@ -258,37 +258,37 @@ suite =
         traverseLRHist (\z a -> (z + 1, if even a then Right (z, a) else Left (a, z))) (100 :: Int) (map Rhi [1 :: Int .. 6])
           @?= ( 106
               ,
-              [ Lh
-                  ( 1
-                  , 100
-                  )
-                  (Rhi 1)
-              , Rh
-                  ( 101
-                  , 2
-                  )
-                  (Rhi 2)
-              , Lh
-                  ( 3
-                  , 102
-                  )
-                  (Rhi 3)
-              , Rh
-                  ( 103
-                  , 4
-                  )
-                  (Rhi 4)
-              , Lh
-                  ( 5
-                  , 104
-                  )
-                  (Rhi 5)
-              , Rh
-                  ( 105
-                  , 6
-                  )
-                  (Rhi 6)
-              ]
+                [ Lh
+                    ( 1
+                    , 100
+                    )
+                    (Rhi 1)
+                , Rh
+                    ( 101
+                    , 2
+                    )
+                    (Rhi 2)
+                , Lh
+                    ( 3
+                    , 102
+                    )
+                    (Rhi 3)
+                , Rh
+                    ( 103
+                    , 4
+                    )
+                    (Rhi 4)
+                , Lh
+                    ( 5
+                    , 104
+                    )
+                    (Rhi 5)
+                , Rh
+                    ( 105
+                    , 6
+                    )
+                    (Rhi 6)
+                ]
               )
     , testCase "appLR" $
         appLR (\a -> if even a then Just a else Nothing) (Rhi @Int @() 4)

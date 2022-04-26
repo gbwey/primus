@@ -89,17 +89,17 @@ suite =
         spanMaybe even (chr . (+ 50)) [2 :: Int, 4, 6, 8, 9, 11, 13]
           @?= ( "468:"
               ,
-              [ 9
-              , 11
-              , 13
-              ]
+                [ 9
+                , 11
+                , 13
+                ]
               )
     , testCase "list" $
-       list 'x' undefined ([] :: [()]) @?= 'x'
+        list 'x' undefined ([] :: [()]) @?= 'x'
     , testCase "listSnoc" $
-       listSnoc 'x' undefined ([] :: [()]) @?= 'x'
+        listSnoc 'x' undefined ([] :: [()]) @?= 'x'
     , testCase "list" $
-       list undefined (,) [1::Int ..5] @?= (1,[2..5])
+        list undefined (,) [1 :: Int .. 5] @?= (1, [2 .. 5])
     , testCase "listSnoc" $
-       listSnoc undefined (,) [1::Int ..5] @?= ([1,2,3,4],5)
+        listSnoc undefined (,) [1 :: Int .. 5] @?= ([1, 2, 3, 4], 5)
     ]

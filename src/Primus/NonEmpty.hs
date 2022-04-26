@@ -93,7 +93,6 @@ module Primus.NonEmpty (
   findDupsBy,
   replicate1,
   replicate1M,
-
   nonemptySnoc,
   nonempty,
   nonempty',
@@ -319,7 +318,7 @@ unsnoc1 = uncurry go . uncons1
 
 -- | break up a nonempty into cases using cons
 nonempty :: (a -> [a] -> b) -> NonEmpty a -> b
-nonempty f (a:|as) = f a as
+nonempty f (a :| as) = f a as
 
 -- | break up a nonempty into cases using cons (argument order is flipped from 'nonempty')
 nonempty' :: NonEmpty a -> (a -> [a] -> b) -> b

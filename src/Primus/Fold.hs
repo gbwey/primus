@@ -202,7 +202,7 @@ traverseLR ::
   Either String (c, t b)
 traverseLR f c0 ta =
   let g :: a -> StateLR String c b
-      g a = StateLR (\c -> f c a)
+      g a = StateLR (`f` a)
    in unStateLR (traverse g ta) c0
 
 -- | fill a traversable with a list and fail if not enough data
@@ -314,11 +314,12 @@ data CLCount b
   deriving stock (Ord, Show, Eq, Functor, Traversable, Foldable)
 
 -- | compare lengths of foldables
-compareLengths :: forall a b t u
-  . (Foldable t,Foldable u)
-  => t a
-  -> [u b]
-  -> [CLCount b]
+compareLengths ::
+  forall a b t u.
+  (Foldable t, Foldable u) =>
+  t a ->
+  [u b] ->
+  [CLCount b]
 compareLengths xs = map (compareLengthBy mempty xs)
 
 -- | compare length where lhs or rhs can be infinite but not both

@@ -48,9 +48,10 @@ module Primus.List (
   snocL,
   unsnocL,
   unsnocL',
-    list,
-    list',
+  list,
+  list',
   listSnoc,
+  select,
 ) where
 
 import Control.Arrow
@@ -249,7 +250,7 @@ partitionM f = go
 list :: b -> (a -> [a] -> b) -> [a] -> b
 list z s = \case
   [] -> z
-  a:as -> s a as
+  a : as -> s a as
 
 -- | break up a list into cases using cons (argument order is flipped from 'list')
 list' :: [a] -> b -> (a -> [a] -> b) -> b
@@ -273,3 +274,8 @@ unsnocL' a =
   \case
     [] -> ([], a)
     x : xs -> first (a :) (unsnocL' x xs)
+
+-- | create a list of lists with one element removed
+select :: [a] -> [(a, [a])]
+select [] = []
+select (a : as) = (a, as) : [(b, a : bs) | (b, bs) <- select as]

@@ -104,26 +104,23 @@ suite =
               ]
     , testCase "compareLengths" $
         compareLengths @Char @Int ['a' .. 'z'] [[101 .. 110], [201 .. 205], [301 .. 302], [], [1001 .. 1020]]
-          @?= [CGT,CGT,CGT,CGT,CGT]
+          @?= [CGT, CGT, CGT, CGT, CGT]
     , testCase "compareLengths" $
         compareLengths @Char @Int ['a' .. 'd'] [[101 .. 104], [201 .. 204], [301 .. 302], [], [1001 .. 1010]]
           @?= [ CEQ
               , CEQ
               , CGT
               , CGT
-              , CLT (1005 :| [1006,1007,1008,1009,1010])
+              , CLT (1005 :| [1006, 1007, 1008, 1009, 1010])
               ]
-
     , testCase "compareLengths" $
         compareLengths @Char @Int ['a' .. 'd'] [[101 .. 110], [201 .. 205], [301 .. 302], [], [1001 .. 1010]]
-          @?=
-             [ CLT (105 :| [106,107,108,109,110])
-             , CLT (205 :| [])
-             , CGT
-             , CGT
-             , CLT (1005 :| [1006,1007,1008,1009,1010])
-             ]
-
+          @?= [ CLT (105 :| [106, 107, 108, 109, 110])
+              , CLT (205 :| [])
+              , CGT
+              , CGT
+              , CLT (1005 :| [1006, 1007, 1008, 1009, 1010])
+              ]
     , testCase "compareLengths" $
         compareLengths @Int @Int [1 .. 5] [[101 .. 110]]
           @?= [CLT (106 :| [107 .. 110])]

@@ -6,9 +6,9 @@
 
 module TestNum1 where
 
+import Data.Int
 import Data.Pos
 import Data.Word
-import Data.Int
 import GHC.Natural
 import Primus.Num1
 import Test.Tasty
@@ -106,7 +106,6 @@ suite =
         signum1 (Right _19P) @?= Right _1P
     , testCase "negate1" $
         negate1 (Right _2P) @?= Left "negate1:integerToEnumSafe:underflow where -2 not in range [1..9223372036854775807]"
-
     , testCase "negate1" $
         negate1 (Right @_ @Word8 0) @?= Right 0
     , testCase "abs1" $
@@ -115,7 +114,6 @@ suite =
         signum1 (Right @_ @Word8 14) @?= Right 1
     , testCase "signum1" $
         signum1 (Right @_ @Word8 0) @?= Right 0
-
     , testCase "negate1" $
         negate1 (Right @_ @Int8 14) @?= Right (-14)
     , testCase "negate1" $
@@ -128,5 +126,4 @@ suite =
         signum1 (Right @_ @Int8 0) @?= Right 0
     , testCase "signum1" $
         signum1 (Right @_ @Int8 14) @?= Right 1
-
     ]
